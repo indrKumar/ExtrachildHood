@@ -145,33 +145,33 @@ class _LoginPageState extends State<LoginPage> {
                                 },
                               ),
                               const SizedBox(height: 25,),
-                              Row(
-                                children: [
-                                  Text(
-                                    "Want to change your password? ",
-                                    style: TextStyle(color: Colors.white, fontSize: 14),
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPassword(),));
-                                    },
-                                    child: Text(
-                                      "Reset Password",
-                                      style: TextStyle(
-                                        color: Color(0xFFFFBB12),
-                                        fontSize: 14,
-                                        decoration: TextDecoration.underline,
-                                        decorationColor: Color(0xFFFFBB12),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              // Row(
+                              //   children: [
+                              //     Text(
+                              //       "Want to change your password? ",
+                              //       style: TextStyle(color: Colors.white, fontSize: 14),
+                              //     ),
+                              //     // InkWell(
+                              //     //   onTap: () {
+                              //     //     Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPassword(),));
+                              //     //   },
+                              //     //   child: Text(
+                              //     //     "Reset Password",
+                              //     //     style: TextStyle(
+                              //     //       color: Color(0xFFFFBB12),
+                              //     //       fontSize: 14,
+                              //     //       decoration: TextDecoration.underline,
+                              //     //       decorationColor: Color(0xFFFFBB12),
+                              //     //     ),
+                              //     //   ),
+                              //     // ),
+                              //   ],
+                              // ),
                               SizedBox(height: 3,),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text(
+                                  const Text(
                                     "Forgot your Old Password? ",
                                     style: TextStyle(color: Colors.white, fontSize: 14),
                                   ),
@@ -179,7 +179,7 @@ class _LoginPageState extends State<LoginPage> {
                                     onTap: () {
                                       // Add your logic for contacting support
                                     },
-                                    child: Text(
+                                    child: const Text(
                                       "Contact Support",
                                       style: TextStyle(
                                         color: Color(0xFFFFBB12),

@@ -29,33 +29,11 @@ class _UploadContentPageState extends State<UploadContentPage> {
   bool isLoading = false;
   File? fileToDisplay;
 
-  void FickFile()async{
-    try {
-      setState(() {
-        isLoading = true;
-      });
-      result = await FilePicker.platform.pickFiles(
-        type: FileType.any,
-        allowMultiple: false,
-      );
-      if(result != null){
-        fileName = result!.files.first.name;
-        pickedfile = result!.files.first;
-        fileToDisplay = File(pickedfile!.path.toString());
-        print("file name $fileName");
-        print("file picked $pickedfile");
-        print("file disply $fileToDisplay");
-      }
-      setState(() {
-        isLoading = true;
-      });
-    }catch (e){
-      print(e);
-    }
-  }
+
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
   final TextEditingController _tagsController = TextEditingController();
+  final TextEditingController _featuringController = TextEditingController();
   final TextEditingController _projectSubController = TextEditingController();
   String? licencePath;
   var teacherId;
@@ -121,6 +99,55 @@ class _UploadContentPageState extends State<UploadContentPage> {
                       icon: const Icon(
                         Icons.keyboard_arrow_down_sharp,
                       ),
+                      value: selectedStudentorValue1,
+                      isDense: true,
+                      isExpanded: true,
+                      menuMaxHeight: 350,
+                      items: [
+                        const DropdownMenuItem(
+                          value: "",
+                          child: Text(
+                            "Select Are you teacher or student ",
+                            style: TextStyle(),
+                          ),
+                        ),
+                        ...dropDownStudentorTecherData
+                            .map<DropdownMenuItem<String>>((data) {
+                          return DropdownMenuItem(
+                            value: data['value'],
+                            child: Text(data['title']),
+                          );
+                        }).toList(),
+                      ],
+                      onChanged: (newValue) {
+                        setState(() {
+                          selectedStudentorValue1 = newValue!;
+                          selectedStudentorTitle1 =
+                          dropDownStudentorTecherData.firstWhere(
+                                  (data) => data['value'] == newValue)['title'];
+                          print("HJH$selectedStudentorValue1");
+                          print(selectedStudentorTitle1);
+                        });
+                      },
+                    ),
+                  ),
+                ),
+              ),
+              selectedStudentorTitle1 == "Student" ? SizedBox():  SizedBox(height: 10,),
+              selectedStudentorTitle1 == "Student" ? SizedBox(): SizedBox(
+                height: 50,
+                child: InputDecorator(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    contentPadding: const EdgeInsets.all(15),
+                  ),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<String>(
+                      icon: const Icon(
+                        Icons.keyboard_arrow_down_sharp,
+                      ),
                       value: selectedCourseValue1,
                       isDense: true,
                       isExpanded: true,
@@ -155,9 +182,9 @@ class _UploadContentPageState extends State<UploadContentPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              selectedStudentorTitle1 == "Student" ? SizedBox(): SizedBox(height: 20),
 
-              SizedBox(
+              selectedStudentorTitle1 == "Student" ? SizedBox():  SizedBox(
                 height: 50,
                 child: InputDecorator(
                   decoration: InputDecoration(
@@ -230,7 +257,6 @@ class _UploadContentPageState extends State<UploadContentPage> {
                 ),
               ),
               SizedBox(height: 20),
-
               SizedBox(
                 height: 50,
                 child: InputDecorator(
@@ -279,8 +305,8 @@ class _UploadContentPageState extends State<UploadContentPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
-              SizedBox(
+              selectedStudentorTitle1 == "Student" ? SizedBox(): SizedBox(height: 20),
+              selectedStudentorTitle1 == "Student" ? SizedBox(): SizedBox(
                 height: 50,
                 child: TextFormField(
                   textAlign: TextAlign.start,
@@ -332,7 +358,7 @@ class _UploadContentPageState extends State<UploadContentPage> {
               SizedBox(height: 20),
               GestureDetector(
                 onTap: () async {
-                  FickFile();
+                 widget.typeOfUpload == "Magazine" ? FickFileImage():widget.typeOfUpload == " NewsPaper" ? FickFileImage():widget.typeOfUpload == "Radio" ? FickFilAudio():widget.typeOfUpload == "Television" ? FickFilVedio():SizedBox();
                   // try {
                   //   final image = await ImagePicker().pickImage(source: ImageSource.gallery);
                   //   final video = await ImagePicker().pickVideo(source: ImageSource.gallery);
@@ -397,6 +423,29 @@ class _UploadContentPageState extends State<UploadContentPage> {
                         )
                       ],
                     ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                height: 160,
+                child: TextField(
+                  controller:_featuringController,
+                  textAlignVertical: TextAlignVertical.top,
+                  maxLines: null,
+                  expands: true,
+                  keyboardType: TextInputType.multiline,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: BorderSide.none),
+                    filled: true,
+                    fillColor: Colors.white,
+                    hintText: 'Featuring',
                   ),
                 ),
               ),
@@ -567,6 +616,101 @@ class _UploadContentPageState extends State<UploadContentPage> {
       ),
     );
   }
+  void FickFileImage()async{
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      result = await FilePicker.platform.pickFiles(
+        type: FileType.image,
+        allowMultiple: false,
+      );
+      if(result != null){
+        fileName = result!.files.first.name;
+        pickedfile = result!.files.first;
+        fileToDisplay = File(pickedfile!.path.toString());
+        print("file name $fileName");
+        print("file picked $pickedfile");
+        print("file disply $fileToDisplay");
+      }
+      setState(() {
+        isLoading = true;
+      });
+    }catch (e){
+      print(e);
+    }
+  }
+  void FickFilVedio()async{
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      result = await FilePicker.platform.pickFiles(
+        type: FileType.video,
+        allowMultiple: false,
+      );
+      if(result != null){
+        fileName = result!.files.first.name;
+        pickedfile = result!.files.first;
+        fileToDisplay = File(pickedfile!.path.toString());
+        print("file name $fileName");
+        print("file picked $pickedfile");
+        print("file disply $fileToDisplay");
+      }
+      setState(() {
+        isLoading = true;
+      });
+    }catch (e){
+      print(e);
+    }
+  }
+  void FickFilAudio()async{
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      result = await FilePicker.platform.pickFiles(
+        type: FileType.audio,
+        allowMultiple: false,
+      );
+      if(result != null){
+        fileName = result!.files.first.name;
+        pickedfile = result!.files.first;
+        fileToDisplay = File(pickedfile!.path.toString());
+        print("file name $fileName");
+        print("file picked $pickedfile");
+        print("file disply $fileToDisplay");
+      }
+      setState(() {
+        isLoading = true;
+      });
+    }catch (e){
+      print(e);
+    }
+  } void FickFilPdf()async{
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      result = await FilePicker.platform.pickFiles(
+        type: FileType.any,
+        allowMultiple: false,
+      );
+      if(result != null){
+        fileName = result!.files.first.name;
+        pickedfile = result!.files.first;
+        fileToDisplay = File(pickedfile!.path.toString());
+        print("file name $fileName");
+        print("file picked $pickedfile");
+        print("file disply $fileToDisplay");
+      }
+      setState(() {
+        isLoading = true;
+      });
+    }catch (e){
+      print(e);
+    }
+  }
 
   List dropDownClassListData = [
     {"title": "Class 1", "value": "1"},
@@ -598,7 +742,15 @@ class _UploadContentPageState extends State<UploadContentPage> {
     // {"title": "Section D", "value": "4"},
   ];
   late String selectedCreatorValue1 = "";
-  String selectedCreatorTitle1 = ''; //
+  String selectedCreatorTitle1 = '';
+
+  List dropDownStudentorTecherData = [
+    {"title": "Student", "value": "1"},
+    {"title": "Teacher", "value": "2"},
+    // {"title": "Section D", "value": "4"},
+  ];
+  late String selectedStudentorValue1 = "";
+  String selectedStudentorTitle1 = ''; //
 
 
   void _validateAndUploadImage() async {

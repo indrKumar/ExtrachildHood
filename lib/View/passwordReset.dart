@@ -28,24 +28,24 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       body: SingleChildScrollView(
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 35),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: MediaQuery.of(context).size.height*0.3,),
+                  SizedBox(height: MediaQuery.of(context).size.height*0.05,),
                   MyFormTextField(
                       controller: _currentPass,
-                      fillColor: Colors.grey.shade300,filled: true,hintText: "Enter current password",textAlign: TextAlign.start),
-                  const SizedBox(height: 20),
+                      fillColor: Colors.grey.shade200,filled: true,hintText: "Enter current password",textAlign: TextAlign.start),
+                  const SizedBox(height: 25),
                   MyFormTextField(
                       controller: _newPass,
-                      fillColor: Colors.grey.shade300,filled: true,hintText: "Create new password  ",textAlign: TextAlign.start),
-                  const SizedBox(height: 20),
+                      fillColor: Colors.grey.shade200,filled: true,hintText: "Create new password  ",textAlign: TextAlign.start),
+                  const SizedBox(height: 25),
                   MyFormTextField(
                       controller: _confirmPass,
-                      fillColor: Colors.grey.shade300,filled: true,hintText: "Confirm password  ",textAlign: TextAlign.start),
+                      fillColor: Colors.grey.shade200,filled: true,hintText: "Confirm password  ",textAlign: TextAlign.start),
 
                   const SizedBox(height: 35,),
 
@@ -76,20 +76,53 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       ),
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(left: 35),
-        child: LoginButton(
-          color: Color(0xFFFFBB12),height: 45,width: double.infinity,borderRadius: BorderRadius.circular(10),child: Center(child: Text("Reset Password",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold))),onTap: () {
-          ApiServices().resetApi(currentPass: _currentPass.text,newPass: _newPass.text,confirmPass: _currentPass.text).then((value) {
-            if(value != null){
-              if(value["is_error"] = false){
-                Navigator.pop(context);
+        child: // ...
+
+        LoginButton(
+          color: Color(0xFFFFBB12),
+          height: 45,
+          width: double.infinity,
+          borderRadius: BorderRadius.circular(10),
+          child: Center(child: Text("Reset Password", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
+          onTap: () {
+            if (_validateInputs()) {
+              ApiServices().resetApi(
+                currentPass: _currentPass.text,
+                newPass: _newPass.text,
+                confirmPass: _confirmPass.text,
+              ).then((value) {
                 Fluttertoast.showToast(msg: value["message"]);
-              }
+                if (value != null && value["is_error"] == false) {
+                  print(value);
+                  Navigator.pop(context);
+                  Fluttertoast.showToast(msg: value["message"]);
+                }
+              });
             }
-          });
-        },),
+          },
+        )
+
+// ...
+
+
       ),
     );
 
 
+  }
+  bool _validateInputs() {
+    if (_currentPass.text.isEmpty || _newPass.text.isEmpty || _confirmPass.text.isEmpty) {
+      Fluttertoast.showToast(msg: 'All fields are required');
+      return false;
+    }
+
+    if (_newPass.text != _confirmPass.text) {
+      Fluttertoast.showToast(msg: 'New password and confirm password must match');
+      return false;
+    }
+
+    // Add more validation checks if needed
+
+    return true;
   }
 }

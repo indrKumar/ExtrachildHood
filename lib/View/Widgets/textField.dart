@@ -55,7 +55,7 @@ class MyFormTextField extends StatelessWidget {
       controller: controller,
       inputFormatters: inputFormatters ?? [],
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.only(left: 30,top: 15,bottom: 15),
+        contentPadding: EdgeInsets.only(left: 20,top: 15,bottom: 15),
         prefixStyle: prefixTextStyle,
         prefixText: prefix,
         hintText: hintText,
@@ -63,13 +63,13 @@ class MyFormTextField extends StatelessWidget {
         hintStyle: hintStyle,
         suffixIcon: suffixIcon,
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: BorderRadius.circular(20),
           borderSide: BorderSide(color: Colors.black),
         ),
         fillColor: fillColor,
         filled: filled,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: BorderRadius.circular(20),
           borderSide: BorderSide(color: Colors.grey),
         ),
       ),
