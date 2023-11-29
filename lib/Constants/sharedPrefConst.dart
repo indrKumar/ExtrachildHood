@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 late SharedPreferences sharedPreferences;
-class SharedPref{
+
+class SharedPref {
   static String accessToken = "";
   static const String SP_ISLOGIN = "isLogin";
 
@@ -19,19 +21,13 @@ class SharedPref{
 
   Constants(BuildContext context) {
     try {
-      _screenSize = MediaQuery
-          .of(context)
-          .size;
-      _passedData = ModalRoute
-          .of(context)!
-          .settings
-          .arguments as Map<String, dynamic>;
+      _screenSize = MediaQuery.of(context).size;
+      _passedData =
+          ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     } catch (e) {
       // log("constant error $e");
     }
-    _textTheme = Theme
-        .of(context)
-        .textTheme;
+    _textTheme = Theme.of(context).textTheme;
   }
 
   double get screenWidth {
@@ -58,31 +54,29 @@ class SharedPref{
     return _passedData;
   }
 
-  static Widget loadingIndicator(){
-    return const Center(
-        child: CircularProgressIndicator(
-
-        )
-    );
+  static Widget loadingIndicator() {
+    return const Center(child: CircularProgressIndicator());
   }
 
-
-
-  static String
-  SP_KEY_USER_TYPE = "key_user_type",
+  static String SP_KEY_USER_TYPE = "key_user_type",
       SP_KEY_ACCESS_TOKEN = "key_user_token",
       SP_KEY_IS_LOGGED_IN = "key_is_logged_in",
       SP_KEY_USER_NAME = "key_user_name",
-      SP_KEY_USER_MOBILE_NUMBER="key_mobile_number",
-      SP_KEY_USER_EMAIL="key_user_email",
-      SP_KEY_USER_ADDRESS="key_user_address",
-      SP_KEY_USER_IMAGE="key_user_image",
+      SP_KEY_USER_MOBILE_NUMBER = "key_mobile_number",
+      SP_KEY_USER_EMAIL = "key_user_email",
+      SP_KEY_USER_ADDRESS = "key_user_address",
+      SP_KEY_USER_IMAGE = "key_user_image",
       SP_KEY_TEACHER_ID = "key_teacher_id",
       TEACHER_NAME = "key_teacher_name",
       SCHOOL_ID = "key_school_id",
-      TEACHER_CONTACT = "key_teacher_contact";
+      BOARD_ID = "key_board_id",
+      TEACHER_CONTACT = "key_teacher_contact",
+      SPECIALIZATION = "key_spe",
+      DOB = "key_dob",
+      HOBBY = "key_hobbey";
 
-  static setStringSp(String key, String value) async{
+
+  static Future<void> setStringSp(String key, String value) async{
     SharedPreferences sp = await SharedPreferences.getInstance();
     sp.setString(key, value);
   }
@@ -91,6 +85,19 @@ class SharedPref{
     SharedPreferences sp = await SharedPreferences.getInstance();
     return sp.getString(key);
   }
+
+  static Future<void> setIntSp(String key, int value) async {
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    await sp.setInt(key, value);
+  }
+
+
+  static Future<int?> getInt(String key) async {
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    return sp.getInt(key);
+  }
+
+
 
   static setBoolSp(String key, bool value) async{
     SharedPreferences sp = await SharedPreferences.getInstance();
@@ -102,4 +109,5 @@ class SharedPref{
     SharedPreferences sp = await SharedPreferences.getInstance();
     return sp.getBool(key);
   }
+
 }

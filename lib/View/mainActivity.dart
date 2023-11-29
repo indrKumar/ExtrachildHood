@@ -1,7 +1,8 @@
 import 'package:extrachildhood/Constants/constcolor.dart';
-import 'package:extrachildhood/View/homePage.dart';
-import 'package:extrachildhood/View/profile.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:extrachildhood/View/Tabs/homePage.dart';
+import 'package:extrachildhood/View/Tabs/profile.dart';
+import 'package:extrachildhood/View/Tabs/social_media_content.dart';
+import 'package:extrachildhood/View/Tabs/task_tab.dart';
 import 'package:flutter/material.dart';
 
 class MainActivityPage extends StatefulWidget {
@@ -16,15 +17,18 @@ class _MainActivityPageState extends State<MainActivityPage> {
 
   @override
   Widget build(BuildContext context) {
-    var _tabs = [
-      HomePage(),
-      ProfilePage()
+    var  tabs = [
+     const TaskTab(),
+      const HomePage(),
+      const SocialMedeaContent(),
+      const ProfilePage(),
     ];
     return  Scaffold(
-      body: _tabs[_currentindex],
+      body: tabs[_currentindex],
       bottomNavigationBar: BottomNavigationBar(
-        selectedIconTheme: IconThemeData(size: 30),
-        selectedLabelStyle: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.black),
+        unselectedItemColor: Colors.grey,
+        selectedIconTheme: const IconThemeData(size: 30),
+        selectedLabelStyle: const TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.black),
         selectedItemColor: Helper.primaryColor,
           showUnselectedLabels: true,
         currentIndex: _currentindex,
@@ -33,8 +37,10 @@ class _MainActivityPageState extends State<MainActivityPage> {
             _currentindex = index;
           });
         },
-          items: [
-        BottomNavigationBarItem(icon:Icon(Icons.home),label: 'Home', ),
+          items: const [
+        BottomNavigationBarItem(icon:Icon(Icons.task_outlined),label: 'Pending Task', ),
+            BottomNavigationBarItem(icon:Icon(Icons.task),label: 'Completed Task', ),
+            BottomNavigationBarItem(icon:Icon(Icons.cameraswitch_rounded),label: 'Social media' ),
         BottomNavigationBarItem(icon:Icon(Icons.person_outline_outlined),label: 'Profile', ),
       ]),
 

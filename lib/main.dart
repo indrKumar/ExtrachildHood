@@ -1,6 +1,7 @@
 import 'package:extrachildhood/View/Aouth/login.dart';
+import 'package:extrachildhood/View/mainActivity.dart';
 import 'package:extrachildhood/View/passwordReset.dart';
-import 'package:extrachildhood/View/homePage.dart';
+import 'package:extrachildhood/View/Tabs/homePage.dart';
 import 'package:extrachildhood/View/uploadcontent.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:  LoginPage(),
+      home:  const LoginPage(),
     );
   }
 }

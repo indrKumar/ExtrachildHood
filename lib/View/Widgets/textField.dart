@@ -19,11 +19,14 @@ class MyFormTextField extends StatelessWidget {
   final TextStyle? style;
   final bool? obscureText;
   final bool? readOnly;
+  final Color? borderColor;
+
   final ValueChanged<String>? onChanged;
 
   const MyFormTextField({
     Key? key,
     this.controller,
+    this.borderColor,
     this.hintStyle,
     this.prefixIcon,
     this.prefix,
@@ -63,14 +66,15 @@ class MyFormTextField extends StatelessWidget {
         hintStyle: hintStyle,
         suffixIcon: suffixIcon,
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(color: Colors.black),
         ),
+
         fillColor: fillColor,
         filled: filled,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20),
-          borderSide: BorderSide(color: Colors.grey),
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color:borderColor ?? Colors.grey),
         ),
       ),
       onChanged:onChanged,
